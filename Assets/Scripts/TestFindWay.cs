@@ -117,15 +117,7 @@ namespace Assets.Scripts
                 {
                     tree.Add(currentMin.Key, new TwoValue(currentMin.Value.fatherBuilding, currentMin.Value.lenghFromStart));
                 }
-
-
-
-
-
-
                 index = currentMin.Key;
-
-
             }
 
             List<Building> result = new List<Building>();
@@ -151,10 +143,6 @@ namespace Assets.Scripts
             {
                 Console.WriteLine("khong tin thay");
             }
-
-
-
-
         }
     }
 }
