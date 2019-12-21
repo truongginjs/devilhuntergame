@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    public string name;
-    public Dictionary<Building, float> ways = new Dictionary<Building, float>();
+    [SerializeField] public string name;
+    public SerializationCallbackScript ways = new SerializationCallbackScript();
+  
 
-    //mau
-    //phong thu
-    //thoi gian xay
-    //cap
-    //gia
+    //[SerializeField] int health;
+    //[SerializeField] int defend;
+    //[SerializeField] int buildingTime;
+    //[SerializeField] int level;
+    //[SerializeField] int cost;
 }

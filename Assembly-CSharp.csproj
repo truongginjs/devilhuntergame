@@ -110,8 +110,8 @@
      <Compile Include="Assets\Resources\scripts\CPlayerAgent.cs" />
      <Compile Include="Assets\Scripts\Building.cs" />
      <Compile Include="Assets\Scripts\FindWay.cs" />
-     <Compile Include="Assets\Scripts\TestFindWay.cs" />
      <Compile Include="Assets\Scripts\Units.cs" />
+     <Compile Include="Assets\Scripts\UnitySerializedDictionary.cs" />
      <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\DepthOfField.shader" />
      <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\MotionBlur.cginc" />
      <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\Fog.shader" />
@@ -154,18 +154,6 @@
      <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\ColorGrading.cginc" />
      <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\AmbientOcclusion.cginc" />
      <None Include="Assets\LowpolySimpleHouse\PostProcessing\Editor Resources\Monitors\WaveformCompute.compute" />
- <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.TextMeshPro">
- <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Analytics.DataPrivacy">
- <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
@@ -175,11 +163,17 @@
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.TextMeshPro.Editor">
+ <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
  <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.CollabProxy.Editor">
+ <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="com.unity.multiplayer-weaver.Editor">
  <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
@@ -201,6 +195,12 @@
  </Reference>
  <Reference Include="UnityEngine.SpatialTracking">
  <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.TextMeshPro">
+ <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Analytics.DataPrivacy">
+ <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.XR.LegacyInputHelpers">
  <HintPath>E:/Unity/Project/FinalProject/devilhuntergame/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
