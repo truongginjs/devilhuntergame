@@ -110,8 +110,9 @@
      <Compile Include="Assets\Resources\scripts\CPlayerAgent.cs" />
      <Compile Include="Assets\Scripts\Building.cs" />
      <Compile Include="Assets\Scripts\FindWay.cs" />
+     <Compile Include="Assets\Scripts\MainMenu.cs" />
+     <Compile Include="Assets\Scripts\OptionMenu.cs" />
      <Compile Include="Assets\Scripts\Units.cs" />
-     <Compile Include="Assets\Scripts\UnitySerializedDictionary.cs" />
      <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\DepthOfField.shader" />
      <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\MotionBlur.cginc" />
      <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\Fog.shader" />
