@@ -104,6 +104,7 @@ namespace Assets.Scripts
 
                     }
                 }
+
                 temp.Remove(currentMin.Key);
 
                 try
@@ -138,6 +139,7 @@ namespace Assets.Scripts
                     result.Add(i);
                     i = tree[i].fatherBuilding;
                 }
+
                 result.Reverse();
 
 
