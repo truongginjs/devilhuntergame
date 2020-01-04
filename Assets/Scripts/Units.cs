@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Units : MonoBehaviour
 {
-    [SerializeField] float health;
     [SerializeField] public float attack;
     [SerializeField] public float defend;
     [SerializeField] public float amount;
@@ -17,6 +16,7 @@ public class Units : MonoBehaviour
     [SerializeField] public float CDTime = 0f; //giam het amount trong CDTime
     [SerializeField] float DPSFromEnemy = new float();
     float TimeStop;// dung de dung HPBar giam khi xong chien dau
+    [SerializeField] bool isPlayer=false;
     GameObject EnemyUnit;
     //player hay computer
 
@@ -24,7 +24,10 @@ public class Units : MonoBehaviour
     {
         EnemyUnit=Other.gameObject;
         Units UnitEnemy = Other.gameObject.GetComponent<Units>();
-        DPSFromEnemy=CaculateDPS(this, UnitEnemy);
+        if (isPlayer == false)
+        {
+            DPSFromEnemy = CaculateDPS(this, UnitEnemy);
+        }
         CDTime = amount / DPSFromEnemy;
        
         print("tiep xuc");
@@ -42,8 +45,8 @@ public class Units : MonoBehaviour
         //DPS: amount giam trong 1 giay
        
         float DPS = new float();
-        DPS = (unit2.attack * unit2.amount - unit1.defend * unit1.amount);
-        if (DPS == 0)
+        DPS = (unit2.attack * unit2.amount - unit1.defend * unit1.amount)*0.01f;
+        if (DPS <= 0)
         {
             DPS = 1f;
         }
