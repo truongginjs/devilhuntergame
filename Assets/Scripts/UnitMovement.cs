@@ -6,28 +6,36 @@ public class UnitMovement : MonoBehaviour
 {
     public float speed;
     private Animator unitAnimator;
-    [SerializeField] Building start, end;
+    public static Building start, end;
     [SerializeField] List<Building> path;
     private int count = 1;
+
     void Start()
     {
         transform.position = start.transform.position;
         unitAnimator = GetComponent<Animator>();
+
         path = GetComponent<FindWay>().getWays(start, end);
 
-
-        //foreach(var t in path)
-        //{
-        //    print(t.name+"\n");
-        //}
-
-
-
     }
+
+
+    
     void Update()
     {
         if (count < path.Count)
             GoToTagrget();
+        if (Vector3.Distance(transform.position, path[path.Count-1].transform.position) < 5)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public static void setPosition(Building startBuiding, Building endBuiding)
+    {
+        start = startBuiding;
+        end = endBuiding;
+
     }
 
     private void GoToTagrget()
@@ -45,8 +53,8 @@ public class UnitMovement : MonoBehaviour
         else
         {
             if (count < path.Count - 1) count++;
-
             unitAnimator.SetFloat("speed", 0);
+            
         }
     }
 }
