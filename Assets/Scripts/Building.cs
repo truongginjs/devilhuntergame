@@ -62,9 +62,12 @@ public class Building : MonoBehaviour
         }
     }
 
-    public void GoAllyGo()
+    public int GoAllyGo()
     {
-         currentHealth /= 2;
+
+        int result = (int)(currentHealth * 0.5);
+        currentHealth -= result;
+         return result;
 
     }
 

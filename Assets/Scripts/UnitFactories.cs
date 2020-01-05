@@ -21,7 +21,7 @@ public class UnitFactories : MonoBehaviour
     //}
     private void GenerateUnit()
     {
-        start.GetComponent<Building>().GoAllyGo();
+        int healthOfUnit = start.GetComponent<Building>().GoAllyGo();
         UnitMovement.setPosition(start.GetComponent<Building>(), end.GetComponent<Building>());
         Instantiate(UnitPrefab, transform.position, Quaternion.identity);
     }

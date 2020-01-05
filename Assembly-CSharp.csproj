@@ -120,6 +120,13 @@
     <Compile Include="Assets\Scripts\UnitFactories.cs" />
     <Compile Include="Assets\Scripts\UnitMovement.cs" />
     <Compile Include="Assets\Scripts\Units.cs" />
+    <Compile Include="Assets\Scripts\Units2.cs" />
+    <Compile Include="Assets\Simple Health Bar\_Asteroids Example\Scripts\AsteroidController.cs" />
+    <Compile Include="Assets\Simple Health Bar\_Asteroids Example\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Simple Health Bar\_Asteroids Example\Scripts\HealthPickupController.cs" />
+    <Compile Include="Assets\Simple Health Bar\_Asteroids Example\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Simple Health Bar\_Asteroids Example\Scripts\PlayerHealth.cs" />
+    <Compile Include="Assets\Simple Health Bar\Scripts\SimpleHealthBar.cs" />
     <Compile Include="Assets\Starfield Skybox\Demo\Script\LookCamera.cs" />
     <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\DepthOfField.shader" />
     <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\MotionBlur.cginc" />
@@ -128,6 +135,7 @@
     <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\LutGen.shader" />
     <None Include="Assets\LowpolySimpleHouse\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\LowpolySimpleHouse\PostProcessing\Editor Resources\UI\CurveBackground.shader" />
+    <None Include="Assets\Simple Health Bar\README.txt" />
     <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
     <None Include="Assets\LowpolySimpleHouse\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
     <None Include="Assets\LowpolySimpleHouse\PostProcessing\Resources\Shaders\ACES.cginc" />

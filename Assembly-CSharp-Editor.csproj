@@ -94,6 +94,8 @@
     <Compile Include="Assets\LowpolySimpleHouse\PostProcessing\Editor\Utils\EditorResources.cs" />
     <Compile Include="Assets\LowpolySimpleHouse\PostProcessing\Editor\Utils\FxStyles.cs" />
     <Compile Include="Assets\LowpolySimpleHouse\PostProcessing\Editor\Utils\ReflectionUtils.cs" />
+    <Compile Include="Assets\Simple Health Bar\Editor\SimpleHealthBarEditor.cs" />
+    <Compile Include="Assets\Simple Health Bar\Editor\SimpleHealthBarWindow.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Asus/Desktop/Final project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

@@ -1,18 +1,92 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.UI;
 
 public class Units : MonoBehaviour
 {
-    [SerializeField] List<Building> path;
+    [SerializeField] public float attack;
+    [SerializeField] public float defend;
+    [SerializeField] public float amount;
+    [SerializeField] float speed;
+    [SerializeField] float cost;
 
-    [SerializeField] int numOfUnits=10;
-    [SerializeField] Unit unitPrefab;
-    void Start()
+    [SerializeField] Image HPBar;
+    [SerializeField] public float CDTime = 0f; //giam het amount trong CDTime
+    [SerializeField] float DPSFromEnemy = new float();
+    float TimeStop;// dung de dung HPBar giam khi xong chien dau
+    [SerializeField] bool isPlayer = false;
+    GameObject EnemyUnit;
+    //player hay computer
+
+    //
+    bool isAttack = true, isStartFight = false;
+
+
+    void OnTriggerEnter(Collider Other)
     {
+        EnemyUnit = Other.gameObject;
+        Units UnitEnemy = Other.gameObject.GetComponent<Units>();
+        if (isPlayer == false)
+        {
+            DPSFromEnemy = CaculateDPS(this, UnitEnemy);
+        }
+        CDTime = amount / DPSFromEnemy;
+
+        print("tiep xuc");
+    }
+    void OnTriggerExit(Collider Other)
+    {
+        if (Other.gameObject == EnemyUnit)
+        {
+            EnemyUnit = null;
+        }
     }
 
+    public float CaculateDPS(Units unit1, Units unit2)
+    {
+        //DPS: amount giam trong 1 giay
 
+        float DPS = new float();
+        DPS = (unit2.attack * unit2.amount - unit1.defend * unit1.amount) * 0.01f;
+        if (DPS <= 0)
+        {
+            DPS = 1f;
+        }
+        return DPS;
+    }
+    //BUG: ko chay cung luc khi HPBar giam
+    //0.031 const de amount va HPbar chay cung luc
+    IEnumerator amountDE()
+    {
+        isStartFight = true;
+        while (isAttack && amount > 0)
+        {
+            HPBar.fillAmount -= (1f / CDTime);
+            amount -= DPSFromEnemy;
+            if (EnemyUnit == null)
+                break;
+            yield return new WaitForSeconds(1f);
+        }
+        isAttack = !isAttack;
+        isStartFight = !isStartFight;
+        if(amount==0)
+        Destroy(gameObject);
+    }
+    void Start()
+    {
 
-
+    }
+    void Update()
+    {
+        if (isAttack && !isStartFight)
+        {
+            StartCoroutine(amountDE());
+        }
+        else
+        {
+            StopCoroutine(amountDE());
+        }
+    }
 }
