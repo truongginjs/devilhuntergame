@@ -7,67 +7,103 @@ using UnityEngine.UI;
 
 public class BuildingInfo
 {
-    public int Health { get; set; }
+    public int Amount { get; set; }
     public float Def { get; set; }
     public float TimeOfHealing { get; set; }
 }
 public class Building : MonoBehaviour
 {
-    public static readonly Dictionary<int, BuildingInfo> Builings = new Dictionary<int, BuildingInfo>
+    public static readonly Dictionary<int, BuildingInfo> Buildings = new Dictionary<int, BuildingInfo>
     {
-        {1, new BuildingInfo { Health = 10, Def = 0.1f, TimeOfHealing = 5f }},
-        {2, new BuildingInfo { Health = 20, Def = 0.2f, TimeOfHealing = 4f }},
-        {3, new BuildingInfo { Health = 30, Def = 0.3f, TimeOfHealing = 3f }},
-        {4, new BuildingInfo { Health = 40, Def = 0.4f, TimeOfHealing = 2f }},
-        {5, new BuildingInfo { Health = 50, Def = 0.5f, TimeOfHealing = 0.5f }}
+        {1, new BuildingInfo { Amount = 10, Def = 0.1f, TimeOfHealing = 1.25f }},
+        {2, new BuildingInfo { Amount = 20, Def = 0.2f, TimeOfHealing = 1f }},
+        {3, new BuildingInfo { Amount = 30, Def = 0.3f, TimeOfHealing = 0.85f }},
+        {4, new BuildingInfo { Amount = 40, Def = 0.4f, TimeOfHealing = 0.65f }},
+        {5, new BuildingInfo { Amount = 50, Def = 0.5f, TimeOfHealing = 0.5f }}
     };
+
+    [SerializeField] ParticleSystem upgradeBuilding;
+
     public Dictionary<Building, float> ways = new Dictionary<Building, float>();
     [SerializeField] List<Building> keys = new List<Building>();
-    int currentHealth = 10;
+    int currentHealth = 1;
     [SerializeField] int level = 1;
+    [SerializeField] float delayUpgrade = 2f;
+
     Text healthText;
+    private bool isHealing;
+
     void Awake()
     {
         keysToWays();
         healthText = GetComponentInChildren<Text>();
         healthText.text = currentHealth.ToString();
+        isHealing = false;
 
-    }
-    private void Start()
-    {
-        StartCoroutine(Healing());
     }
 
     private void Update()
     {
-        healthText.text = currentHealth.ToString();
-        var info = Builings[level];       
+        if (currentHealth < Buildings[level].Amount && !isHealing)
+        {
+            StartCoroutine(Healing());
+        }
+        healthText.text = currentHealth.ToString() + " / " + Buildings[level].Amount;
+        var info = Buildings[level];
     }
 
-    public void UpgradeBuiding()
+    public void Occupied()
     {
-        level++;
+
     }
+
+    public void Upgrade()
+    {
+        Upgrading(true);
+        StartCoroutine(StartUpgrade());
+    }
+
+    private IEnumerator StartUpgrade()
+    {
+
+        yield return new WaitForSeconds(delayUpgrade);
+        int index = Buildings[level].Amount / 2;
+        if (currentHealth >= index)
+        {
+            level++;
+            currentHealth -= index;
+        }
+        Upgrading(false);
+    }
+
+    private void Upgrading(bool isUpgrading)
+    {
+        if (isUpgrading)
+            upgradeBuilding.Play();
+        else
+            upgradeBuilding.Stop();
+    }
+
     //hoi mau
     public IEnumerator Healing()
     {
-        var info = Builings[level];
-        while (true)
+        var info = Buildings[level];
+        while (currentHealth < info.Amount)
         {
-            if(currentHealth < info.Health)
-            {
-                currentHealth+=1;
-            }
+            isHealing = true;
+            currentHealth += 1;
             yield return new WaitForSeconds(info.TimeOfHealing);
         }
+        isHealing = false;
+
     }
 
     public int GoAllyGo()
     {
 
-        int result = (int)(currentHealth * 0.5);
+        int result = (int)(currentHealth * ManagerGame.percentOfUnit);
         currentHealth -= result;
-         return result;
+        return result;
 
     }
 
@@ -84,9 +120,6 @@ public class Building : MonoBehaviour
         MeshRenderer topMesh = transform.Find("Top").GetComponent<MeshRenderer>();
         topMesh.material.color = color;
     }
-    private void OnMouseOver()
-    {
 
-    }
 }
 
