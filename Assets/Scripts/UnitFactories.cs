@@ -4,30 +4,26 @@ using UnityEngine;
 
 public class UnitFactories : MonoBehaviour
 {
-    [SerializeField] GameObject UnitPrefab;
-    //[SerializeField] int num = 3;
+    [SerializeField] List<GameObject> UnitAllyPrefab = new List<GameObject>();
+
     [SerializeField] GameObject start, end;
     bool click = false;
 
-    //public IEnumerator GenerateUnits()
-    //{
-    //    for (int i = 0; i < num; i++)
-    //    {
-    //        UnitMovement.setPosition(start.GetComponent<Building>(), end.GetComponent<Building>());
-    //        var temp = Instantiate(UnitPrefab, transform.position, Quaternion.identity);
 
-    //        yield return new WaitForSeconds(1f);
-    //    }
-    //}
-    private void GenerateUnit()
+    private void GenerateAllyUnit()
     {
         int healthOfUnit = start.GetComponent<Building>().GoAllyGo();
+        if (healthOfUnit == 0) return;
         UnitMovement.setPosition(start.GetComponent<Building>(), end.GetComponent<Building>());
-        Instantiate(UnitPrefab, transform.position, Quaternion.identity);
+        Units unitBuilding = start.GetComponent<Units>();
+       
+            UnitAllyPrefab[0].GetComponent<Units>().amount = healthOfUnit;
+            Instantiate(UnitAllyPrefab[0], transform.position, Quaternion.identity);
+       
     }
 
     private void Update()
-    { 
+    {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 1000))
@@ -35,22 +31,28 @@ public class UnitFactories : MonoBehaviour
             var temp = hit.collider.transform.gameObject;
             if (Input.GetMouseButtonDown(0) && temp.GetComponent<Building>() != null)//chuot trai
             {
-                if (click)
+                if (click)//lan 2
                 {
                     end = temp;
                     print(end.name);
-                    if(!start.Equals(end))
-                        GenerateUnit();
+                    if (!start.Equals(end))
+                        GenerateAllyUnit();
                     Unselected();
                 }
-                else
+                else //lan 1
                 {
-                    ((Behaviour)temp.GetComponent("Halo")).enabled = true;                    
-                    start = temp;
-                    print(start.name);
+                    if (temp.GetComponent<Building>().unit.isPlayer)
+                    {
+                        ((Behaviour)temp.GetComponent("Halo")).enabled = true;
+                        start = temp;
+                        print(start.name);
+
+                    }
+                    else
+                        click = true;
                 }
                 click = !click;
-            }     
+            }
 
         }
         if (Input.GetMouseButtonDown(1))

@@ -4,82 +4,82 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingInfo
-{
-    public int Amount { get; set; }
-    public float Def { get; set; }
-    public float TimeOfHealing { get; set; }
-}
+
 public class Building : MonoBehaviour
 {
-    public static readonly Dictionary<int, BuildingInfo> Buildings = new Dictionary<int, BuildingInfo>
-    {
-        {1, new BuildingInfo { Amount = 10, Def = 0.1f, TimeOfHealing = 1.25f }},
-        {2, new BuildingInfo { Amount = 20, Def = 0.2f, TimeOfHealing = 1f }},
-        {3, new BuildingInfo { Amount = 30, Def = 0.3f, TimeOfHealing = 0.85f }},
-        {4, new BuildingInfo { Amount = 40, Def = 0.4f, TimeOfHealing = 0.65f }},
-        {5, new BuildingInfo { Amount = 50, Def = 0.5f, TimeOfHealing = 0.5f }}
-    };
-
     [SerializeField] ParticleSystem upgradeBuilding;
 
     public Dictionary<Building, float> ways = new Dictionary<Building, float>();
     [SerializeField] List<Building> keys = new List<Building>();
-    int currentHealth = 1;
-    [SerializeField] int level = 1;
+    public int currentAmount = 1;
+    public int level = 1;
     [SerializeField] float delayUpgrade = 2f;
 
     Text healthText;
     private bool isHealing;
-
+    public Units unit;
+    Dictionary<int, BuildingInfo> Buildings;
     //----
     [SerializeField] Image flag;
-    int buildingOf = 0;
     //----
     void Awake()
     {
+        Buildings = ManagerGame.Buildings;
         keysToWays();
         healthText = GetComponentInChildren<Text>();
-        healthText.text = currentHealth.ToString();
+        healthText.text = currentAmount.ToString();
         isHealing = false;
-
+        unit = GetComponent<Units>();
     }
 
     void setFlag()
     {
-        switch (buildingOf)
+        if (unit.isNeutral)
         {
-            case 0:
+            flag.color = Color.white;
+        }
+        else
+        {
+            if (unit.isPlayer)
                 flag.color = Color.red;
-                break;
-            case 1:
+            else
                 flag.color = Color.blue;
-                break;
-            default:
-                flag.color = Color.white;
-                break;
         }
     }
 
     private void Update()
     {
-        if (currentHealth < Buildings[level].Amount && !isHealing)
+        unit.amount = currentAmount;
+        unit.defend = Buildings[level].Def;
+        if (currentAmount < Buildings[level].Amount && !isHealing)
         {
             StartCoroutine(Healing());
         }
-        healthText.text = currentHealth.ToString() + " / " + Buildings[level].Amount;
+        if (currentAmount > Buildings[level].Amount)
+            currentAmount = Buildings[level].Amount;
+
+        setFlag();
+        healthText.text = currentAmount.ToString() + " / " + Buildings[level].Amount;
         var info = Buildings[level];
     }
 
-    public void Occupied()
+    public void stopHealing()
     {
-
+        StopCoroutine(Healing());
+    }
+    public void startHealing()
+    {
+        StartCoroutine(Healing());
     }
 
     public void Upgrade()
     {
-        Upgrading(true);
-        StartCoroutine(StartUpgrade());
+        if (level <= 5)
+        {
+
+            Upgrading(true);
+            StartCoroutine(StartUpgrade());
+        }
     }
 
     private IEnumerator StartUpgrade()
@@ -87,10 +87,10 @@ public class Building : MonoBehaviour
 
         yield return new WaitForSeconds(delayUpgrade);
         int index = Buildings[level].Amount / 2;
-        if (currentHealth >= index)
+        if (currentAmount >= index)
         {
             level++;
-            currentHealth -= index;
+            currentAmount -= index;
         }
         Upgrading(false);
     }
@@ -107,10 +107,10 @@ public class Building : MonoBehaviour
     public IEnumerator Healing()
     {
         var info = Buildings[level];
-        while (currentHealth < info.Amount)
+        while (currentAmount < info.Amount)
         {
             isHealing = true;
-            currentHealth += 1;
+            currentAmount += 1;
             yield return new WaitForSeconds(info.TimeOfHealing);
         }
         isHealing = false;
@@ -118,8 +118,8 @@ public class Building : MonoBehaviour
 
     public int GoAllyGo()
     {
-        int result = (int)(currentHealth * ManagerGame.percentOfUnit);
-        currentHealth -= result;
+        int result = (int)(currentAmount * ManagerGame.percentOfUnit);
+        currentAmount -= result;
         return result;
     }
 
