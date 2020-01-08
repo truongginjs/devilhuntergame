@@ -48,13 +48,12 @@ public class UnitMovement : MonoBehaviour
         {
             //print("maxDistanceDetail: " + maxDistanceDetail);
             //print("khoang cach: " + Vector3.Distance(transform.position, target.position));
-            unitAnimator.SetFloat("speed", maxDistanceDetail);
+            unitAnimator.SetInteger("condition", 1);
         }
         else
         {
             if (count < path.Count - 1) count++;
-            unitAnimator.SetFloat("speed", 0);
-            
+            unitAnimator.SetInteger("condition", 0);
         }
     }
 }

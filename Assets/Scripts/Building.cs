@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class BuildingInfo
 {
     public int Amount { get; set; }
@@ -33,6 +32,10 @@ public class Building : MonoBehaviour
     Text healthText;
     private bool isHealing;
 
+    //----
+    [SerializeField] Image flag;
+    int buildingOf = 0;
+    //----
     void Awake()
     {
         keysToWays();
@@ -40,6 +43,22 @@ public class Building : MonoBehaviour
         healthText.text = currentHealth.ToString();
         isHealing = false;
 
+    }
+
+    void setFlag()
+    {
+        switch (buildingOf)
+        {
+            case 0:
+                flag.color = Color.red;
+                break;
+            case 1:
+                flag.color = Color.blue;
+                break;
+            default:
+                flag.color = Color.white;
+                break;
+        }
     }
 
     private void Update()
@@ -95,16 +114,13 @@ public class Building : MonoBehaviour
             yield return new WaitForSeconds(info.TimeOfHealing);
         }
         isHealing = false;
-
     }
 
     public int GoAllyGo()
     {
-
         int result = (int)(currentHealth * ManagerGame.percentOfUnit);
         currentHealth -= result;
         return result;
-
     }
 
     private void keysToWays()

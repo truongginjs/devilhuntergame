@@ -19,15 +19,20 @@ public class Units : MonoBehaviour
 
     [SerializeField] bool isNeutral = false;
 
+    Animator unitAnimator;
+
+    [SerializeField] AudioSource runSFX, deadSFX, spawnSFX, hitSFX;
+
     GameObject EnemyUnit;
 
     //player hay computer
 
     //
-    bool isAttack = true, isStartFight = false;
+    bool isAttack = true, isFighting = false;
 
     void OnTriggerEnter(Collider Other)
     {
+        unitAnimator = GetComponent<Animator>();
         EnemyUnit = Other.gameObject;
         Units UnitEnemy = Other.gameObject.GetComponent<Units>();
         if (isPlayer != UnitEnemy.isPlayer || UnitEnemy.isNeutral)
@@ -60,7 +65,7 @@ public class Units : MonoBehaviour
     //0.031 const de amount va HPbar chay cung luc
     IEnumerator amountDE()
     {
-        isStartFight = true;
+        isFighting = true;
         while (isAttack && amount > 0)
         {
             HPBar.fillAmount -= (1f / CDTime);
@@ -70,7 +75,7 @@ public class Units : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         isAttack = !isAttack;
-        isStartFight = !isStartFight;
+        isFighting = !isFighting;
         if (amount == 0)
         {
             if (GetComponent<Building>() != null)
@@ -79,23 +84,29 @@ public class Units : MonoBehaviour
             }
             else
             {
-                Destroy(gameObject);
+                StartCoroutine(DestroyUnit());                
             }
         }
     }
-    void Start()
-    {
 
+    private IEnumerator DestroyUnit()
+    {
+        unitAnimator.SetInteger("condition", 5);
+        yield return new WaitForSeconds(1.5f);
+        Destroy(gameObject);
     }
+
     void Update()
     {
-        if (isAttack && !isStartFight)
+        if (isAttack && !isFighting)
         {
+            unitAnimator.SetInteger("condition", 2);
             StartCoroutine(amountDE());
         }
         else
         {
             StopCoroutine(amountDE());
+            unitAnimator.SetInteger("condition", 0);
         }
     }
 }
